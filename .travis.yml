@@ -10,4 +10,4 @@ deploy:
   on:
     repo: klkelley/tictactoe-clojure
     all_branches: true
-    tags: true 
+
