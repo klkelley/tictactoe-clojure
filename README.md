@@ -2,10 +2,21 @@
 
 TicTacToe written in Cljoure
 
+## Build Project 
+```
+$ lein uberjar 
+```
+
 ## Play Game 
 
-    $ java -jar tictactoe-0.1.0-standalone.jar [args]
+```
+$ java -jar target/uberjar/tictactoe-game-standalone.jar
+```
 
+## Run Tests
+```
+$ lein test
+```
 
 ## License
 
