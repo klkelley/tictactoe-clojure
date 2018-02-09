@@ -1,5 +1,5 @@
 language: clojure
-lein: 2.4
+lein: 2.8.1
 
 deploy:
   provider: releases
