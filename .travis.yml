@@ -4,11 +4,6 @@ lein: 2.8.1
 script: 
   - lein uberjar
 
-before_deploy:
-  - git config --local user.name "klkelley"
-  - git config --local user.email "kelley.15@gmail.com"
-  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-
 deploy:
   provider: releases
   skip_cleanup: true 
@@ -17,7 +12,8 @@ deploy:
   file: "/home/travis/build/klkelley/tictactoe-clojure/target/uberjar/tictactoe-game-standalone.jar"
   on:
     repo: klkelley/tictactoe-clojure
+    tags: true 
     all_branches: true 
-    
+
 
 
