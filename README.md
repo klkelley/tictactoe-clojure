@@ -1,6 +1,6 @@
 # tictactoe [![Build Status](https://travis-ci.org/klkelley/tictactoe-clojure.svg?branch=master)](https://travis-ci.org/klkelley/tictactoe-clojure)
 
-TicTacToe written in Cljoure
+TicTacToe written in Clojure
 
 ## Build Project 
 ```
