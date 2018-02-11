@@ -2,6 +2,5 @@
   (:require [clojure.test :refer :all]
            [tictactoe.user-interface :refer :all])) 
 
-(deftest class-setup
-  ( testing "idk"
-    (is (= 1 1))))
+(deftest print-message-test
+   (is (=  "test\n" (with-out-str  (print-message "test")))))
