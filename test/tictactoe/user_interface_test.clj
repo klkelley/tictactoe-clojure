@@ -4,3 +4,6 @@
 
 (deftest print-message-test
    (is (=  "test\n" (with-out-str  (print-message "test")))))
+
+(deftest get-input-test
+  (is (= "input received" (with-in-str "input received" (get-input)))))
