@@ -19,6 +19,6 @@ deploy:
     repo: klkelley/tictactoe-clojure
     branches: 
       only: 
-        - master 
+        - finish-skeleton-setup
 
 
