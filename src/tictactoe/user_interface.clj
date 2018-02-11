@@ -4,5 +4,4 @@
   (println (str message)))
 
 (defn get-input []
-  (read-line)
-)
+  (read-line))
