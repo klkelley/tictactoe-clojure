@@ -17,8 +17,7 @@ deploy:
   file: "/home/travis/build/klkelley/tictactoe-clojure/target/uberjar/tictactoe-game-standalone.jar"
   on:
     repo: klkelley/tictactoe-clojure
-    branches: 
-      only: 
-        - finish-skeleton-setup
+    all_branches: true 
+    
 
 
