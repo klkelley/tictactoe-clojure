@@ -10,6 +10,6 @@
 
 (defn start []
 	(let [game-options (game-menu/menu game-types board-sizes)]
-	(println game-options)))
+	 game-options))
  	
   ; / then start the game with stuff ))
