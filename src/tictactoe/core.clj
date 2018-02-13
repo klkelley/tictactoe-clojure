@@ -1,7 +1,5 @@
 (ns tictactoe.core
-  (:gen-class))
+ (:require [tictactoe.game-runner :as game-runner]))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+(defn -main []
+  (game-runner/start))
