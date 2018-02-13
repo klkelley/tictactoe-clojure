@@ -11,5 +11,3 @@
 (defn start []
 	(let [game-options (game-menu/menu game-types board-sizes)]
 	 game-options))
- 	
-  ; / then start the game with stuff ))
