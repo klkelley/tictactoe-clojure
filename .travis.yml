@@ -1,0 +1,20 @@
+language: clojure
+lein: 2.8.1
+
+script:
+  - lein test  
+  - lein uberjar
+
+deploy:
+  provider: releases
+  skip_cleanup: true 
+  api_key:
+    secure: pv5cgw8w69aH6Y/ZNLRSbbqYEAzNXCtfuaib3076Co8LYdiq9//eE/sPNeXG9eUtfl147quNOCC8wC+yTcLk0viepyciih6y4nAQhMshIBaI+GX+FMUV5TrTpuZbA/khTogcktXEYJXEOZlnVETUeEgxVm7qQITFlGS26oZsNQIsBRal3BnaD6DsGCSYm+MlIP9Foa4JuzIDXZMiTJzLIiwziNSesn7kKfqdR6YhLXsFI5YHOYPt8WK1dAHBvrJEUPym0r9hf1yp9ZZeogPicwQ5BknKBoWxOtWmsidGL0Mmt02MsHWMfXEbE4/aJjX6j4XVV0tKx1OY1Nn3RPCINCHRvUMigM6EUNSyLpqyPYyzZ/r2AIPxVndFAdsyLtD4Knw/hR67cmlbwsVGff8LR3+eR7siwIYUYPA6zR6mp/5EIz4E+7PzNLlilwDyR8lraNI27tsZiSAMBVfi0NQ+4F/dwBGY8G9qoE+UA+h3VOUOKI/ZXfKn+Za6ll/l5xZHF3oPzePNSBDCQgGBN1DgoYnLJ8/PyJmGG9zC2J55AHcZoE4f2y2U1afRlIkN6ATyZjpIXXaWvKbHP6CrO7TnYY5mGueXuFECexrCRWyGoAnhWzez5z7r7eMc5hZHRiZZ2NBqL/99JGLpl42u7he2VUUrXE+P9gZJ81DLuYbaPr0=
+  file: "/home/travis/build/klkelley/tictactoe-clojure/target/uberjar/tictactoe-game-standalone.jar"
+  on:
+    repo: klkelley/tictactoe-clojure
+    tags: true 
+    all_branches: true 
+
+
+
