@@ -1,6 +1,6 @@
 (ns tictactoe.marker-validation-test
 	(:require [clojure.test :refer :all]
-			  [tictactoe.marker-validation :refer :all]))
+			  		[tictactoe.marker-validation :refer :all]))
 
 (deftest valid-marker
   (testing "Marker is a valid choice" 
