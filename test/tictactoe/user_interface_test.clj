@@ -7,3 +7,11 @@
 
 (deftest get-input-test
   (is (= "input received" (with-in-str "input received" (get-input)))))
+
+(deftest test-loop-and-print
+	(is (= "you => rock\n" (with-out-str (loop-and-print {:you "rock"})))))
+
+(deftest prints-and-loops
+	(testing "It loops and prints out key value pairs")
+	(with-out-str "test"
+		(is (= nil (loop-and-print {:game "Human V Human" :board "3x3"})))))
