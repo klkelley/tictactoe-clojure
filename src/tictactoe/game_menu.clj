@@ -10,7 +10,7 @@
 
 (defn pick-game [game-types] 
   (ui/print-message (messages/game-type))
-  (dorun (map #(ui/print-message %) (vals game-types)))
+  (ui/loop-and-print game-types)
   (-> 
       (ui/get-input)
       (keyword)
@@ -19,7 +19,7 @@
 
 (defn pick-board-size [board-sizes] 
   (ui/print-message (messages/board-type))
-  (dorun (map #(ui/print-message %) (vals board-sizes)))
+  (ui/loop-and-print board-sizes)
   (-> 
       (ui/get-input)
       (keyword)
@@ -40,9 +40,9 @@
       (marker-validator/marker-validation-loop player1-marker)
       (string/upper-case)))
 
-(defn chosen-game-options [[& game-options]]
+(defn chosen-game-options [game-options]
   (ui/print-message (messages/game-choices))
-  (dorun (map #(ui/print-message %) (apply vector game-options))))
+  (ui/loop-and-print game-options))
 
 (defn menu [game-type board-sizes]
   (welcome-message)
@@ -50,19 +50,10 @@
         board-size (pick-board-size board-sizes)
         player-one-marker (pick-player-one-marker)
         player-two-marker (pick-player-two-marker player-one-marker)]
-  (chosen-game-options [(get game-type game-choice) 
-                        (get board-sizes board-size) 
-                        (str "Player 1 marker: " player-one-marker)
-                        (str "Player 2 marker: " player-two-marker)])
-  {:game game-choice :board board-size :player1 player-one-marker :player2 player-two-marker}))
 
-
-
-
-
-
-
-
-
-
-
+  (let [choices {:game (get game-type game-choice) 
+                      :board (get board-sizes board-size) 
+                      :player1 player-one-marker 
+                      :player2 player-two-marker}]
+  (chosen-game-options choices)
+   choices)))
