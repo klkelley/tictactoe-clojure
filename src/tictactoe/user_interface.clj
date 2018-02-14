@@ -2,12 +2,12 @@
 
 (defn print-message
   ([message]
-  	(println message))
+    (println message))
   ([message supplementing-info]
-  	(println message "=>" supplementing-info)))
+    (println message "=>" supplementing-info)))
 
 (defn get-input []
   (read-line))
 
 (defn loop-and-print [options]
-	(doseq [[k v] (map identity options)] (print-message (name k) v)))
+  (doseq [[k v] (map identity options)] (print-message (name k) v)))

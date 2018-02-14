@@ -9,5 +9,5 @@
   (apply str (interleave coll (repeat "\n"))))
 
 (deftest test-start 
-	(with-out-str "test" (with-in-str (make-input '("1" "2" "a" "b")) (start))))
-  (is (= {:game :1 :board :2 :player1 "A" :player2 "B"}))
+  (with-out-str "test" (with-in-str (make-input '("1" "2" "a" "b")) (start))))
+    (is (= {:game :1 :board :2 :player1 "A" :player2 "B"}))

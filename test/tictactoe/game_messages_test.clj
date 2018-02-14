@@ -6,7 +6,7 @@
   (is (= "Welcome to Tic Tac Toe!\n" (welcome))))
  
 (deftest game-type-message
- (is (= "Pick a game type:" (game-type))))
+  (is (= "Pick a game type:" (game-type))))
 
 (deftest board-type-message
   (is (= "What size board would you like to play?" (board-type))))
@@ -18,4 +18,4 @@
   (is (= "Please pick player 2's marker (A-Z)" (player-two-marker))))
 
 (deftest game-choices-message
-	(is (= "You've chosen:" (game-choices))))
+  (is (= "You've chosen:" (game-choices))))

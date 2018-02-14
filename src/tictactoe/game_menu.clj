@@ -6,7 +6,7 @@
             [tictactoe.marker-validation :as marker-validator]))
 
 (defn welcome-message []
- (ui/print-message (messages/welcome)))
+  (ui/print-message (messages/welcome)))
 
 (defn pick-game [game-types] 
   (ui/print-message (messages/game-type))

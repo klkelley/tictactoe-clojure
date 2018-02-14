@@ -16,4 +16,4 @@
   "Please pick player 2's marker (A-Z)")
 
 (defn game-choices []
-	"You've chosen:")
+  "You've chosen:")
