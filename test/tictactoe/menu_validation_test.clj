@@ -26,7 +26,7 @@
 (deftest loops-when-invalid-choice
   (testing "Loops until valid input is received"
 	(is (= "Invalid. Please pick an available option.\n"
-		 (with-out-str "Invalid. Please pick an available option."
+		(with-out-str "Invalid. Please pick an available option."
 			(with-in-str "1" (input-validation-loop :3 game-types)))))))
 
 (deftest input-validation-doesnt-loop-when-valid
