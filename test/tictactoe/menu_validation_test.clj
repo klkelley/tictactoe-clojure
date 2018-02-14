@@ -32,4 +32,3 @@
 (deftest input-validation-doesnt-loop-when-valid
   (testing "It does not loop when valid input is given"
 		(is (= :1 (with-in-str "1" (input-validation-loop :1 game-types))))))
-
