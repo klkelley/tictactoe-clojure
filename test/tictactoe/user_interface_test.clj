@@ -9,7 +9,7 @@
   (is (= "input received" (with-in-str "input received" (get-input)))))
 
 (deftest test-loop-and-print
-	(is (= "you => rock\n" (with-out-str (loop-and-print {:you "rock"})))))
+	(is (= "game => Human vs Human\n" (with-out-str (loop-and-print {:game "Human vs Human"})))))
 
 (deftest prints-and-loops
 	(testing "It loops and prints out key value pairs")
