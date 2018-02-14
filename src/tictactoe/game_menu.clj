@@ -12,33 +12,33 @@
   (ui/print-message (messages/game-type))
   (ui/loop-and-print game-types)
   (-> 
-      (ui/get-input)
-      (keyword)
-      (validator/input-validation-loop game-types)
-      (keyword)))
+    (ui/get-input)
+    (keyword)
+    (validator/input-validation-loop game-types)
+    (keyword)))
 
 (defn pick-board-size [board-sizes] 
   (ui/print-message (messages/board-type))
   (ui/loop-and-print board-sizes)
   (-> 
-      (ui/get-input)
-      (keyword)
-      (validator/input-validation-loop board-sizes)
-      (keyword)))
+    (ui/get-input)
+    (keyword)
+    (validator/input-validation-loop board-sizes)
+    (keyword)))
 
 (defn pick-player-one-marker []
   (ui/print-message (messages/player-one-marker))
   (-> 
-      (ui/get-input)
-      (marker-validator/marker-validation-loop)
-      (string/upper-case)))
+    (ui/get-input)
+    (marker-validator/marker-validation-loop)
+    (string/upper-case)))
 
 (defn pick-player-two-marker [player1-marker]
   (ui/print-message (messages/player-two-marker))
   (-> 
-      (ui/get-input)
-      (marker-validator/marker-validation-loop player1-marker)
-      (string/upper-case)))
+    (ui/get-input)
+    (marker-validator/marker-validation-loop player1-marker)
+    (string/upper-case)))
 
 (defn chosen-game-options [game-options]
   (ui/print-message (messages/game-choices))
