@@ -52,8 +52,8 @@
         player-two-marker (pick-player-two-marker player-one-marker)]
 
   (let [choices {:game (get game-type game-choice) 
-                      :board (get board-sizes board-size) 
-                      :player1 player-one-marker 
-                      :player2 player-two-marker}]
+                 :board (get board-sizes board-size) 
+                 :player1 player-one-marker 
+                 :player2 player-two-marker}]
   (chosen-game-options choices)
    choices)))
