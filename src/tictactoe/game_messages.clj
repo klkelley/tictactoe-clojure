@@ -4,16 +4,16 @@
   "Welcome to Tic Tac Toe!\n")
 
 (defn game-type []
-  "Pick a game type: \n")
+  "Pick a game type:")
 
 (defn board-type [] 
-  "What size board would you like to play? \n")
+  "What size board would you like to play?")
 
 (defn player-one-marker []
-  "Please pick player 1's marker (A-Z)\n")
+  "Please pick player 1's marker (A-Z)")
 
 (defn player-two-marker []
-  "Please pick player 2's marker (A-Z)\n")
+  "Please pick player 2's marker (A-Z)")
 
 (defn game-choices []
-	"You've chosen: \n")
+	"You've chosen:")

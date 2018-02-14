@@ -45,7 +45,7 @@
 (deftest show-chosen-game-options
   (testing "Prints out game options chosen by user"
 	(with-out-str "test" (ui/print-message (messages/game-choices))
-	(is (= "You've chosen: \n\ngame => 1\nboard => 2\nplayer1 => X\nplayer2 => O\n"
+	(is (= "You've chosen:\ngame => 1\nboard => 2\nplayer1 => X\nplayer2 => O\n"
        (with-out-str (chosen-game-options {:game 1 :board 2 :player1 "X" :player2"O"})))))))
 
 (deftest show-game-menu
