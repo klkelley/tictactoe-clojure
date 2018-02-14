@@ -1,5 +1,5 @@
 (ns tictactoe.menu-validation-test
-	(require [clojure.test :refer :all]
+	(:require [clojure.test :refer :all]
 			 [tictactoe.menu-validation :refer :all]))
 
 (def game-types
