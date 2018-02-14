@@ -1,9 +1,9 @@
 (ns tictactoe.menu-validation-test
 	(:require [clojure.test :refer :all]
-			 [tictactoe.menu-validation :refer :all]))
+			 			[tictactoe.menu-validation :refer :all]))
 
 (def game-types
-  {:1 "1. Human vs. Human" :2 "2. Human vs. Easy Computer"})
+  {:1 "Human vs. Human" :2 "Human vs. Easy Computer"})
 
 (deftest test-valid-game-choice
   (testing "Test that available option was chosen"
