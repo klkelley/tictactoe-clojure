@@ -49,7 +49,8 @@
   ([options choice]
    (contains? options choice))
   ([options other-marker choice]
-   (and (contains? options choice) (not= (string/lower-case other-marker) choice))))
+   (and (contains? options (string/lower-case choice))
+        (not= (string/lower-case other-marker) (string/lower-case choice)))))
 
 (defn ^:private invalid-choice
   [errors options]
