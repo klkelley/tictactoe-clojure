@@ -76,4 +76,4 @@
   (is (= true (string/includes?
          (with-out-str ""
            (with-in-str (make-input '("1" "1" "x" "p" "0" "0" "f" "4" "1" "2" "6" "3" "5" "7" "8")) 
-            (game-runner/start))) "Its a tie!" )))))
+            (start))) "Its a tie!" )))))
