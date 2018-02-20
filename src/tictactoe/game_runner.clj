@@ -190,8 +190,7 @@
 
 (defn ^:private rows 
   [board]
-  (map #(into [] (range % (+ % (board-size board)))) 
-       (filter #(= 0 (mod % (board-size board))) (range (count board)))))
+  (partition 3 (range (count board))))
 
 (defn ^:private columns 
   [board]
@@ -216,8 +215,9 @@
 
 (defn ^:private diagonals
   [board]
-  [(left-diagonal board (first (diagonal-corners board))) 
-   (right-diagonal board (last (diagonal-corners board)))])
+  (let [[left-corner right-corner] (diagonal-corners board)]
+    [(left-diagonal board left-corner) 
+    (right-diagonal board right-corner)]))
 
 (defn ^:private winning-combinations 
   [board]
