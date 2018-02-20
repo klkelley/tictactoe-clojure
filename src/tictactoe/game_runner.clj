@@ -121,8 +121,7 @@
 
 (defn ^:private setup-players 
   [choices]
-  (if (= "Human vs. Human" (choices :game))
-    [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}]))
+  [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}])
 
 (defn ^:private make-board 
   [board-choice]
