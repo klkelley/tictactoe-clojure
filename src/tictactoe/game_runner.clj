@@ -190,7 +190,7 @@
 
 (defn ^:private rows 
   [board]
-  (partition 3 (range (count board))))
+  (partition (board-size board) (range (count board))))
 
 (defn ^:private columns 
   [board]
