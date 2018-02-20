@@ -48,7 +48,7 @@
                 "player1 => A"
                 "player2 => B\n")
          (with-out-str ""
-           (with-in-str (make-input '("4" "1" "2" "a" "b")) (game-runner/start)))))))
+           (with-in-str (make-input '("4" "1" "2" "a" "B")) (game-runner/start)))))))
 
 
 
@@ -70,4 +70,4 @@
                   "player1 => A"
                   "player2 => B\n")
            (with-out-str ""
-             (with-in-str (make-input '("1" "2" "a" "a" "b")) (game-runner/start)))))))
+             (with-in-str (make-input '("1" "2" "A" "a" "B")) (game-runner/start)))))))
