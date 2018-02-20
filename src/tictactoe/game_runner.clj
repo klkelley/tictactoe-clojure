@@ -167,11 +167,11 @@
     (apply str)))
 
 (defn ^:private board-dividers
-  [number board-size]
-  (cond (>= number (dec (* board-size board-size))) 
+  [number grid-size]
+  (cond (>= number (dec (* grid-size grid-size))) 
           nil
-        (= (dec board-size) (mod number board-size)) 
-          (str "\n"(row-divider board-size)"\n")
+        (= (dec grid-size) (mod number grid-size)) 
+          (str "\n"(row-divider grid-size)"\n")
         :else "|"))
 
 (defn ^:private grid-size
