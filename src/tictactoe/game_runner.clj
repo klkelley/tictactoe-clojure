@@ -174,7 +174,7 @@
           (str "\n"(row-divider board-size)"\n")
         :else "|"))
 
-(defn ^:private board-size
+(defn ^:private grid-size
   [board]
   (math/sqrt (count board)))
 
@@ -185,12 +185,12 @@
 
 (defn ^:private display-board 
   [board]
-  (println (apply str (map #(str "  "(board %)"  " (board-dividers % (board-size board)))
+  (println (apply str (map #(str "  "(board %)"  " (board-dividers % (grid-size board)))
                             (range (count board))))))
 
 (defn ^:private rows 
   [board]
-  (partition (board-size board) (range (count board))))
+  (partition (grid-size board) (range (count board))))
 
 (defn ^:private columns 
   [board]
@@ -198,14 +198,14 @@
 
 (defn ^:private left-diagonal
   [board]
-  (reduce #(conj %1 (+ 0 (* %2 (inc (board-size board))))) 
-          [] (range (board-size board))))
+  (reduce #(conj %1 (+ 0 (* %2 (inc (grid-size board))))) 
+          [] (range (grid-size board))))
 
 (defn ^:private right-diagonal
   [board]
-  (let [right-corner (dec (board-size board))]
+  (let [right-corner (dec (grid-size board))]
   (reduce #(conj %1 (+ right-corner (* %2 right-corner)))
-          [right-corner] (range 1 (board-size board)))))
+          [right-corner] (range 1 (grid-size board)))))
 
 (defn ^:private diagonals
   [board]
