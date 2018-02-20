@@ -139,7 +139,7 @@
 (defn ^:private to-integer 
   [choice]
   (try
-    (Integer. (re-find #"\d+" choice))
+    (Integer. (re-find #"^\d+$" choice))
     (catch Exception e nil)))
 
 (defn ^:private place-move 
