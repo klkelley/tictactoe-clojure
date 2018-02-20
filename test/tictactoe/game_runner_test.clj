@@ -32,7 +32,7 @@
   (testing "User will be prompted for different marker if choice is invalid"
   (is (= true (string/includes?
          (with-out-str ""
-           (with-in-str (make-input '("1" "1" "x" "5" "p" "0" "4" "1" "3" "2")) 
+           (with-in-str (make-input '("1" "1" "X" "5" "P" "0" "4" "1" "3" "2")) 
             (start))) "Invalid. Please pick another marker." )))))
 
 (deftest invalid-menu-choice
