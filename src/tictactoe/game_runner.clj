@@ -2,6 +2,8 @@
   (:require [clojure.string :as string]
             [clojure.math.numeric-tower :as math]))
 
+(def ^:dynamic sleep-time 5000)
+
 (def ^:private game-types
   {"1" "Human vs. Human" "2" "Human vs. Impossible Computer"})
 
@@ -259,6 +261,7 @@
   (let [options (menu game-types board-sizes)
         [player1 player2] (setup-players options)
         board (make-board (options :board))]
+    (Thread/sleep sleep-time)
     (clear-screen)
     (display-board board)
     (game-loop player1 player2 board)))
