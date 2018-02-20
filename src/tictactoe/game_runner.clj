@@ -196,28 +196,21 @@
   [board]
   (apply map vector (rows board)))
 
-(defn ^:private diagonal-corners
-  [board]
-  (->>
-    (board-size board)
-    (dec)
-    (conj [0])))
-
 (defn ^:private left-diagonal
-  [board starting-corner]
-  (reduce #(conj %1 (+ starting-corner (* %2 (inc (board-size board))))) 
+  [board]
+  (reduce #(conj %1 (+ 0 (* %2 (inc (board-size board))))) 
           [] (range (board-size board))))
 
 (defn ^:private right-diagonal
-  [board starting-corner]
-  (reduce #(conj %1 (+ starting-corner (* %2 (dec (board-size board)))))
-          [starting-corner] (range 1 (board-size board))))
+  [board]
+  (let [right-corner (dec (board-size board))]
+  (reduce #(conj %1 (+ right-corner (* %2 right-corner)))
+          [right-corner] (range 1 (board-size board)))))
 
 (defn ^:private diagonals
   [board]
-  (let [[left-corner right-corner] (diagonal-corners board)]
-    [(left-diagonal board left-corner) 
-    (right-diagonal board right-corner)]))
+    [(left-diagonal board) 
+    (right-diagonal board)])
 
 (defn ^:private winning-combinations 
   [board]
