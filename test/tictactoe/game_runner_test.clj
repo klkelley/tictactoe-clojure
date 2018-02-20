@@ -63,7 +63,6 @@
            (with-in-str (make-input '("1" "1" "X" "O" "2" "3" "4" "7" "6")) 
             (start))) "Player X wins!" )))))
 
-
 (deftest win-game-via-column
   (testing "Game can be won via column"
   (is (= true (string/includes?
