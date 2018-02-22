@@ -1,38 +1,21 @@
 (ns tictactoe.game-runner
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as string]
+            [clojure.math.numeric-tower :as math]))
 
-(def game-types
-  {"1" "Human vs. Human" "2" "Human vs. Easy Computer"})
+(def ^:dynamic *sleep-time* 5000)
 
-(def board-sizes
+(def ^:private game-types
+  {"1" "Human vs. Human" "2" "Human vs. Impossible Computer"})
+
+(def ^:private board-sizes
   {"1" "3x3" "2" "4x4"})
 
-(def markers 
+(def ^:private markers 
   (set (string/split "abcdefghijklmnopqrstuvwxyz" #"")))
-
-(defn ^:private welcome-message
-  []
-  "Welcome to Tic Tac Toe!\n")
-
-(defn ^:private game-type-message
-  []
-  "Pick a game type:")
-
-(defn ^:private board-type-message
-  []
-  "What size board would you like to play?")
-
-(defn ^:private player-marker-message
-  [player]
-  (str "Please pick " player "'s marker (A-Z)"))
-
-(defn ^:private game-choices-message
-  []
-  "You've chosen:")
 
 (defn ^:private print-message
   ([message]
-   (println message))
+   (println (str message)))
   ([message supplementing-info]
    (println message "=>" supplementing-info)))
 
@@ -40,7 +23,7 @@
   []
   (read-line))
 
-(defn ^:private loop-and-print
+(defn ^:private display-game-menu-options
   [options]
   (doseq [[number choice] (map identity options)]
     (print-message (name number) choice)))
@@ -97,7 +80,7 @@
 (defn ^:private pick
   [options options-message]
   (print-message options-message)
-  (loop-and-print options)
+  (display-game-menu-options options)
   (->
     (get-input)
     (input-validation-loop options)
@@ -105,14 +88,14 @@
 
 (defn ^:private pick-marker
   ([]
-   (print-message (player-marker-message "player 1"))
+   (print-message "Please pick player 1's marker (A-Z):")
    (->
      (get-input)
      (string/lower-case)
      (input-validation-loop markers)
      (string/upper-case)))
   ([player1-marker]
-   (print-message (player-marker-message "player 2"))
+   (print-message "Please pick player 2's marker (A-Z):")
    (->
      (get-input)
      (string/lower-case)
@@ -121,24 +104,184 @@
 
 (defn ^:private chosen-game-options
   [game-options]
-  (print-message (game-choices-message))
-  (loop-and-print game-options))
+  (print-message "You've chosen: ")
+  (display-game-menu-options game-options))
 
 (defn ^:private menu
   [game-types board-sizes]
-  (print-message (welcome-message))
-  (let [game-choice (pick game-types (game-type-message))
-        board-size (pick board-sizes (board-type-message))
+  (print-message "Welcome to Tic Tac Toe!")
+  (let [game-choice (pick game-types "Pick a game type: ")
+        board-size (pick board-sizes "What size board would you like to play?")
         player-one-marker (pick-marker)
         player-two-marker (pick-marker player-one-marker)]
     (let [choices {:game (get game-types game-choice)
                    :board (get board-sizes board-size)
                    :player1 player-one-marker
                    :player2 player-two-marker}]
-  (chosen-game-options choices)
-  choices)))
+      (chosen-game-options choices)
+      choices)))
+
+(defn ^:private setup-players 
+  [choices]
+  [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}])
+
+(defn ^:private make-board 
+  [board-choice]
+  (if (= "3x3" board-choice)
+    (vec (take 9 (range)))
+    (vec (take 16 (range)))))
+
+(defn ^:private empty-space? 
+  [space]
+  (number? space))
+
+(defn ^:private available-spaces
+  [board]
+  (filter empty-space? board))
+
+(defn ^:private to-integer 
+  [choice]
+  (try
+    (Integer. (re-find #"^\d+$" choice))
+    (catch Exception e (print-message "Invalid choice!"))))
+
+(defn ^:private place-move 
+  [spot marker board]
+  (assoc board spot marker))
+
+(defn ^:private get-human-move
+  [available-spaces]
+  (print-message "Please pick an available cell: ")
+  (let [choice (to-integer (get-input))]
+    (if (and choice (some #(= choice %) available-spaces))
+      choice
+      (recur available-spaces))))
+
+(defn ^:private next-move
+  [current-player board]
+  (get-human-move (available-spaces board)))
+
+(defn ^:private row-divider
+  [length]
+  (->> 
+    "--"
+    (repeat (+ (* length 3) length))
+    (apply str)))
+
+(defn ^:private board-dividers
+  [number grid-size]
+  (cond (>= number (dec (* grid-size grid-size))) 
+          "\n"
+        (= (dec grid-size) (mod number grid-size)) 
+          (str "\n"(row-divider grid-size)"\n")
+        :else (str "|")))
+
+(defn ^:private grid-size
+  [board]
+  (math/sqrt (count board)))
+
+(defn ^:private clear-screen
+  []
+  (print (str (char 27) "[2J"))
+  (print (str (char 27) "[;H")))
+
+(defn ^:private make-space 
+  [amount]
+  (apply str (repeat amount \space)))
+
+(defn ^:private format-cell 
+  [cell]
+  (let [length (count (str cell))
+        rightside (quot (- 7 length) 2)
+        leftside (- 7 (+ length rightside))]
+  (str (make-space rightside) cell (make-space leftside))))
+
+(defn ^:private display-board 
+  [board]
+  (let [board-size (range (count board))
+        grid (grid-size board)
+        formatted-board (map #(str (format-cell (board %)) 
+                          (board-dividers % grid)) board-size)]
+  (print-message (apply str formatted-board))))
+
+(defn ^:private rows 
+  [board]
+  (partition (grid-size board) (range (count board))))
+
+(defn ^:private columns 
+  [board]
+  (apply map vector (rows board)))
+
+(defn ^:private left-diagonal
+  [board]
+  (reduce #(conj %1 (+ 0 (* %2 (inc (grid-size board))))) 
+          [] (range (grid-size board))))
+
+(defn ^:private right-diagonal
+  [board]
+  (let [right-corner (dec (grid-size board))]
+  (reduce #(conj %1 (+ right-corner (* %2 right-corner)))
+          [right-corner] (range 1 (grid-size board)))))
+
+(defn ^:private diagonals
+  [board]
+  [(left-diagonal board) 
+  (right-diagonal board)])
+
+(defn ^:private winning-combinations 
+  [board]
+  (apply concat [(rows board) (columns board) (diagonals board)]))
+
+(defn ^:private has-three-in-a-row?
+  [board combo]
+  (= 1 (count (set (map #(board %) combo)))))
+
+(defn ^:private winner-exists?
+  [board combo]
+  (if (has-three-in-a-row? board combo)
+    (board (first combo))
+    nil))
+
+(defn ^:private winner
+  [board]
+  (some #(winner-exists? board %) (winning-combinations board)))
+
+(defn ^:private winner?
+  [board]
+  (some? (winner board)))
+
+(defn ^:private game-results 
+  [board]
+  (let [winner (winner board)]
+    (if (winner? board)
+      (print-message (str "Player " winner " wins!"))
+      (print-message "Its a tie!"))))
+
+(defn ^:private tie? 
+  [board]
+  (and (not-any? integer? board) (not (winner? board))))
+
+(defn ^:private game-over? 
+  [board]
+  (or (winner? board) (tie? board)))
+
+(defn ^:private game-loop 
+  [current-player next-player board]
+  (let [move (next-move current-player board)
+        game-board (place-move move (current-player :marker) board)]
+    (clear-screen)
+    (display-board game-board)
+    (if (game-over? game-board)
+      (game-results game-board)
+      (recur next-player current-player game-board))))
 
 (defn start 
-  "Starts the game menu and asks the user for game preferences"
+  "Asks the user for game preferences and starts the game"
   []
-  (menu game-types board-sizes))
+  (let [options (menu game-types board-sizes)
+        [player1 player2] (setup-players options)
+        board (make-board (options :board))]
+    (Thread/sleep *sleep-time*)
+    (clear-screen)
+    (display-board board)
+    (game-loop player1 player2 board)))
