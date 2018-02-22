@@ -84,7 +84,6 @@
           (binding [*sleep-time* 0]
             (timeout 1000 #(start))))) "Player O wins!\n" )))))
 
-
 (deftest test-game-human-v-human-player2-wins
   (testing "Player two wins the game on a 3x3 board"
     (is (= true (string/includes?
@@ -141,7 +140,6 @@
           (binding [*sleep-time* 0]
             (timeout 1000 #(start))))) "Player X wins!\n" )))))
 
-
 (deftest test-cell-choice-validation
   (testing "User will continue to be prompted for valid input and available spaces"
     (is (= true (string/includes?
@@ -149,34 +147,6 @@
         (with-in-str (make-input '("1" "1" "x" "p" "0" "0" "f" "4" "1" "2" "6" "3" "5" "7" "8")) 
           (binding [*sleep-time* 0]
             (timeout 1000 #(start))))) "Its a tie!\n" )))))
-
-(deftest test-3x3-board-display
-  (testing "Board is 3x3 grid"
-    (is (= true (string/includes? 
-      (with-out-str ""
-        (with-in-str (make-input '("1" "1" "X" "O" "1" "4" "2" "8" "7" "0")) 
-          (binding [*sleep-time* 0]
-            (timeout 1000 #(start))))) 
-              (lines "   0   |   1   |   2   "
-                     "------------------------"
-                     "   3   |   4   |   5   "
-                     "------------------------"
-                     "   6   |   7   |   8   \n"))))))
-
-(deftest test-4x4-board-display
-  (testing "Board is 4x4 grid"
-    (is (= true (string/includes? 
-      (with-out-str ""
-        (with-in-str (make-input '("1" "2" "X" "O" "0" "4" "1" "8" "2" "12" "3")) 
-          (binding [*sleep-time* 0]
-            (timeout 1000 #(start))))) 
-              (lines "   0   |   1   |   2   |   3   "
-                     "--------------------------------"
-                     "   4   |   5   |   6   |   7   "
-                     "--------------------------------"
-                     "   8   |   9   |  10   |  11   "
-                     "--------------------------------"
-                     "  12   |  13   |  14   |  15   \n"))))))
 
 (deftest test-user-is-prompted-to-choose-space
   (testing "User is asked to enter a number for an available cell"
@@ -193,7 +163,6 @@
         (with-in-str (make-input '("1" "1" "X" "O" "2" "3" "4" "7" "f" "6")) 
           (binding [*sleep-time* 0]
             (timeout 1000 #(start))))) "Invalid choice!\n" )))))
-
 
 (deftest test-all-available-markers 
   (testing "Available markers for game play are a-z"
