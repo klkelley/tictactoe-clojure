@@ -17,7 +17,7 @@
 
 (declare moves-and-scores)
 
-(defn min-or-max 
+(defn ^:private min-or-max 
   [board-state depth]
   (if (not (zero? (mod depth 2)))
     (apply min (vals board-state))
