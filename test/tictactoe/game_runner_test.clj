@@ -173,3 +173,24 @@
           (with-in-str (make-input ["1" "1" x y "2" "3" "4" "7" "6"]) 
             (binding [*sleep-time* 0]
               (timeout 2000 #(start))))) (str "Player " (string/upper-case x) " wins!\n" )))))))
+
+(deftest impossible-computer-ties-game 
+  (testing "Computer blocks any attempts at opponent winning resulting in tie game"
+    (doseq [[spot1 spot2 spot3 spot4 spot5] [["0" "2" "7" "6" "5"] ["0" "3" "2" "7" "5"] 
+                                            ["8" "5" "6" "1" "0"] ["8" "5" "6" "1" "0"] 
+                                            [ "4" "6" "5" "1" "0"] ["6" "3" "8" "1" "2"]]]
+      (is (= true (string/includes?
+        (with-out-str ""
+          (with-in-str (make-input ["2" "1" "x" "o" spot1 spot2 spot3 spot4 spot5]) 
+            (binding [*sleep-time* 0]
+              (timeout 4000 #(start))))) "Its a tie!\n" ))))))
+
+(deftest test-computer-always-wins 
+  (testing "Computer always wins when opponent doesn't make a blocking move"
+    (doseq [[spot1 spot2 spot3] [["2" "8" "1"] ["0" "1" "3"] 
+                                ["5" "2" "4"] ["6" "1" "2"]]]
+      (is (= true (string/includes?
+        (with-out-str ""
+          (with-in-str (make-input ["2" "1" "x" "o" spot1 spot2 spot3]) 
+            (binding [*sleep-time* 0]
+              (timeout 7000 #(start))))) "Player O wins!\n" ))))))
