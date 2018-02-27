@@ -3,7 +3,8 @@
             [tictactoe.board :refer [available-spaces winner place-move 
                                     build-board make-board game-over? game-results]]
             [tictactoe.ui :refer [print-message clear-screen
-                                  menu get-human-move]]))
+                                  menu get-human-move]]
+            [tictactoe.ai :refer [get-computer-move]]))
 
 (def ^:dynamic *sleep-time* 5000)
 
@@ -18,15 +19,20 @@
 
 (defn ^:private setup-players 
   [choices]
-  [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}])
+  (if (= (choices :game) "Human vs. Human")
+  [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}]
+  [{:type :human :marker (choices :player1)} {:type :computer :marker (choices :player2)}]))
 
+  
 (defn ^:private next-move
-  [current-player board]
-  (get-human-move (available-spaces board)))
+  [current-player next-player board]
+  (if (= (current-player :type) :human)
+  (get-human-move (available-spaces board))
+  (time (get-computer-move board (current-player :marker) (next-player :marker)))))
 
 (defn ^:private game-loop 
   [current-player next-player board]
-  (let [move (next-move current-player board)
+  (let [move (next-move current-player next-player board)
         game-board (place-move move (current-player :marker) board)]
     (clear-screen)
     (print-message (build-board game-board))
