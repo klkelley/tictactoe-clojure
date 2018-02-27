@@ -183,7 +183,7 @@
         (with-out-str ""
           (with-in-str (make-input ["2" "1" "x" "o" spot1 spot2 spot3 spot4 spot5]) 
             (binding [*sleep-time* 0]
-              (timeout 4000 #(start))))) "Its a tie!\n" ))))))
+              (timeout 2000 #(start))))) "Its a tie!\n" ))))))
 
 (deftest test-computer-always-wins 
   (testing "Computer always wins when opponent doesn't make a blocking move"
@@ -193,4 +193,4 @@
         (with-out-str ""
           (with-in-str (make-input ["2" "1" "x" "o" spot1 spot2 spot3]) 
             (binding [*sleep-time* 0]
-              (timeout 7000 #(start))))) "Player O wins!\n" ))))))
+              (timeout 2000 #(start))))) "Player O wins!\n" ))))))
