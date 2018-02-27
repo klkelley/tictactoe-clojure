@@ -1,5 +1,5 @@
 (ns tictactoe.ai
-  (:require [tictactoe.board :refer [place-move tie? winner game-over? available-spaces]]))
+  (:require [tictactoe.board :refer [place-move winner game-over? available-spaces]]))
 
 (defn ^:private take-turn
   [depth computer opponent]
@@ -30,14 +30,17 @@
     (scores board-state computer depth)
     (min-or-max (moves-and-scores board-state computer opponent (inc depth)) depth))))
 
+(def memoize-get-scores (future (memoize get-scores)))
+
 (defn ^:private moves-and-scores
   [board computer opponent depth]
-  (zipmap (available-spaces board) (map #(get-scores (place-move % (take-turn depth computer opponent) board) computer opponent depth)
-    (available-spaces board))))
+  (let [moves (available-spaces board)
+        scores (map #(@memoize-get-scores (place-move % (take-turn depth computer opponent) board) 
+                      computer opponent depth) moves)]
+  (zipmap (available-spaces board) scores)))
 
 (defn ^:private get-best-move
   [scored-moves]
-  (println scored-moves)
   (key (apply max-key val scored-moves)))
 
 (defn get-computer-move
