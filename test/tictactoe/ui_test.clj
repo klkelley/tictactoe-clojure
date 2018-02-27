@@ -1,5 +1,5 @@
 (ns tictactoe.ui-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [clojure.test :as test]
             [tictactoe.ui :as ui]
             [clojure.string :as string]))
 
@@ -20,23 +20,23 @@
   [coll]
   (apply str (interleave coll (repeat "\n"))))
 
-(deftest test-print-message
-  (testing "prints message as string if one parameter is received"
-    (is (= "TicTacToe!\n"
+(test/deftest test-print-message
+  (test/testing "prints message as string if one parameter is received"
+    (test/is (= "TicTacToe!\n"
       (with-out-str "" (ui/print-message "TicTacToe!"))))))
 
-(deftest test-print-message-with-supplementing-info
-  (testing "prints message with arrow if supplementing info is received"
-    (is (= "Winner => Player X\n"
+(test/deftest test-print-message-with-supplementing-info
+  (test/testing "prints message with arrow if supplementing info is received"
+    (test/is (= "Winner => Player X\n"
       (with-out-str "" (ui/print-message "Winner" "Player X"))))))
 
-(deftest test-get-input
-  (testing "Reads input entered by user"
-    (is (= "X" (with-in-str "X" (ui/get-input))))))
+(test/deftest test-get-input
+  (test/testing "Reads input entered by user"
+    (test/is (= "X" (with-in-str "X" (ui/get-input))))))
 
-(deftest test-menu 
-  (testing "Menu is displayed to user and summary is shown after user picks choices"
-    (is (= (lines "Welcome to Tic Tac Toe!"
+(test/deftest test-menu 
+  (test/testing "Menu is displayed to user and summary is shown after user picks choices"
+    (test/is (= (lines "Welcome to Tic Tac Toe!"
                   "Pick a game type: "
                   "1 => Human vs. Human"
                   "2 => Human vs. Impossible Computer"
