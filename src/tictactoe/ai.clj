@@ -26,9 +26,9 @@
 (defn ^:private get-scores
   [board computer opponent depth]
   (let [board-state board]
-  (if (game-over? board-state)
-    (scores board-state computer depth)
-    (min-or-max (moves-and-scores board-state computer opponent (inc depth)) depth))))
+    (if (game-over? board-state)
+      (scores board-state computer depth)
+      (min-or-max (moves-and-scores board-state computer opponent (inc depth)) depth))))
 
 (def memoize-get-scores (future (memoize get-scores)))
 
@@ -36,8 +36,8 @@
   [board computer opponent depth]
   (let [moves (available-spaces board)
         scores (map #(@memoize-get-scores (place-move % (take-turn depth computer opponent) board) 
-                      computer opponent depth) moves)]
-  (zipmap (available-spaces board) scores)))
+                                          computer opponent depth) moves)]
+    (zipmap (available-spaces board) scores)))
 
 (defn ^:private get-best-move
   [scored-moves]
