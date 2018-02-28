@@ -37,7 +37,7 @@
   (let [moves (available-spaces board)
         scores (map #(@memoize-get-scores (place-move % (take-turn depth computer opponent) board) 
                                           computer opponent depth) moves)]
-    (zipmap (available-spaces board) scores)))
+    (zipmap moves scores)))
 
 (defn ^:private get-best-move
   [scored-moves]
