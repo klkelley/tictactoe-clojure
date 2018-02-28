@@ -3,4 +3,5 @@
   (:require [tictactoe.game-runner :as game-runner]))
 
 (defn -main []
-  (game-runner/start))
+  (game-runner/start)
+  (shutdown-agents))

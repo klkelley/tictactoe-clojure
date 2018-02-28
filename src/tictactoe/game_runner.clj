@@ -1,9 +1,8 @@
 (ns tictactoe.game-runner
   (:require [clojure.string :as string]
-            [tictactoe.board :refer [available-spaces winner place-move 
-                                    build-board make-board game-over? game-results]]
-            [tictactoe.ui :refer [print-message clear-screen
-                                  menu get-human-move]]))
+            [tictactoe.board :as board]
+            [tictactoe.ui :as ui]
+            [tictactoe.ai :as ai]))
 
 (def ^:dynamic *sleep-time* 5000)
 
@@ -18,29 +17,42 @@
 
 (defn ^:private setup-players 
   [choices]
-  [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}])
+  (if (= (choices :game) "Human vs. Human")
+    [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}]
+    [{:type :human :marker (choices :player1)} {:type :computer :marker (choices :player2)}]))
+
+(defmulti ^:private move 
+  (fn [current-player next-player board] (current-player :type)))
+
+(defmethod ^:private move :human 
+  [current-player next-player board] 
+  (ui/get-human-move (board/available-spaces board)))
+
+(defmethod ^:private move :computer 
+  [current-player next-player board] 
+  (ai/get-computer-move board (current-player :marker) (next-player :marker)))
 
 (defn ^:private next-move
-  [current-player board]
-  (get-human-move (available-spaces board)))
+  [current-player next-player board]
+  (move current-player next-player board))
 
 (defn ^:private game-loop 
   [current-player next-player board]
-  (let [move (next-move current-player board)
-        game-board (place-move move (current-player :marker) board)]
-    (clear-screen)
-    (print-message (build-board game-board))
-    (if (game-over? game-board)
-      (print-message (game-results game-board))
+  (let [move (next-move current-player next-player board)
+        game-board (board/place-move move (current-player :marker) board)]
+    (ui/clear-screen)
+    (ui/print-message (board/build-board game-board))
+    (if (board/game-over? game-board)
+      (ui/print-message (board/game-results game-board))
       (recur next-player current-player game-board))))
 
 (defn start 
   "Displays game menu and starts the game"
   []
-  (let [options (menu game-types board-sizes markers)
+  (let [options (ui/menu game-types board-sizes markers)
         [player1 player2] (setup-players options)
-        board (make-board (options :board))]
+        board (board/make-board (options :board))]
     (Thread/sleep *sleep-time*)
-    (clear-screen)
-    (print-message (build-board board))
+    (ui/clear-screen)
+    (ui/print-message (board/build-board board))
     (game-loop player1 player2 board)))
