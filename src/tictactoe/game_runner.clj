@@ -2,12 +2,13 @@
   (:require [clojure.string :as string]
             [tictactoe.board :as board]
             [tictactoe.ui :as ui]
-            [tictactoe.ai :as ai]))
+            [tictactoe.ai :as ai]
+            [tictactoe.random-ai :as random-ai]))
 
 (def ^:dynamic *sleep-time* 5000)
 
 (def ^:private game-types
-  {"1" "Human vs. Human" "2" "Human vs. Impossible Computer"})
+  {"1" "Human vs. Human" "2" "Human vs. Impossible Computer" "3" "Human vs. Random Computer"})
 
 (def ^:private board-sizes
   {"1" "3x3" "2" "4x4"})
@@ -17,9 +18,13 @@
 
 (defn ^:private setup-players 
   [choices]
-  (if (= (choices :game) "Human vs. Human")
-    [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}]
-    [{:type :human :marker (choices :player1)} {:type :computer :marker (choices :player2)}]))
+  (cond
+    (= (choices :game) "Human vs. Human") 
+        [{:type :human :marker (choices :player1)} {:type :human :marker (choices :player2)}]
+    (= (choices :game) "Human vs. Impossible Computer")
+        [{:type :human :marker (choices :player1)} {:type :computer :marker (choices :player2)}]
+    :else 
+        [{:type :human :marker (choices :player1)} {:type :random-ai :marker (choices :player2)}]))
 
 (defmulti ^:private move 
   (fn [current-player next-player board] (current-player :type)))
@@ -31,6 +36,10 @@
 (defmethod ^:private move :computer 
   [current-player next-player board] 
   (ai/get-computer-move board (current-player :marker) (next-player :marker)))
+
+(defmethod ^:private move :random-ai
+  [current-player next-player board]
+  (random-ai/get-computer-move board (current-player :marker) (next-player :marker)))
 
 (defn ^:private next-move
   [current-player next-player board]

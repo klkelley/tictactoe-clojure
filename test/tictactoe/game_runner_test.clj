@@ -112,7 +112,7 @@
   (test/testing "User must choose an available menu option"
     (test/is (= true (string/includes?
       (with-out-str ""
-        (with-in-str (make-input '("3" "1" "1" "w" "x" "0" "4" "1" "3" "2"))
+        (with-in-str (make-input '("6" "1" "1" "w" "x" "0" "4" "1" "3" "2"))
           (binding [game-runner/*sleep-time* 0]
             (timeout 1000 #(game-runner/start))))) "Invalid. Please pick an available option.\n" )))))
 
@@ -194,3 +194,11 @@
           (with-in-str (make-input ["2" "1" "x" "o" spot1 spot2 spot3]) 
             (binding [game-runner/*sleep-time* 0]
               (timeout 2000 #(game-runner/start))))) "Player O wins!\n" ))))))
+
+(test/deftest test-stupid-computer
+  (test/testing "Stupid computer picks moves at random"
+    (test/is (= true (string/includes?
+      (with-out-str ""
+        (with-in-str (make-input '("3" "1" "x" "o" "4" "2" "6" "7" "8" "3" "1"))
+          (binding [game-runner/*sleep-time* 0]
+            (timeout 2000 #(game-runner/start))))) "Player X wins!\n" )))))
